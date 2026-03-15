@@ -66,6 +66,8 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/latihanmodul1-api:latest
             sudo docker stop latihanmodul1-api || true
             sudo docker rm latihanmodul1-api || true
+            sudo docker ps --filter "publish=3000" -q | xargs -r sudo docker stop
+            sudo docker ps -a --filter "publish=3000" -q | xargs -r sudo docker rm
             sudo docker run -d --name latihanmodul1-api -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/latihanmodul1-api:latest
 
       - name: Verify deployment
