@@ -54,7 +54,7 @@ jobs:
     name: Deploy to Azure VM
     runs-on: ubuntu-latest
     needs: build-and-push-image
-
+  
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -69,6 +69,6 @@ jobs:
             sudo docker ps --filter "publish=3000" -q | xargs -r sudo docker stop
             sudo docker ps -a --filter "publish=3000" -q | xargs -r sudo docker rm
             sudo docker run -d --name latihanmodul1-api -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/latihanmodul1-api:latest
-
-      - name: Verify deployment
-        run: curl --fail http://${{ secrets.VM_HOST }}:3000/health
+  
+            sleep 5
+            curl --fail http://localhost:3000/health
